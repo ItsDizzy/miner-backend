@@ -1,16 +1,24 @@
-'use strict';
+import { Promise } from 'meteor/promise';
 
-class Store {
+import { Workers } from '../../imports/api/Workers.js';
+
+
+export default class Store {
     constructor() {
-        this.workers = [];
+        //this.workers = [];
     }
 
-    addWorker(data) {
+    addWorker(wallet, name) {
         return new Promise((resolve, reject) => {
-            if(this._findWorker(data.name) != -1)
+            /*if(this._findWorker(data.name) != -1)
                 return reject({ message: `Worker#${data.name} is already registered!` });
             this.workers.push({
                 name: data.name
+            });
+            resolve();*/
+            Workers.insert({
+                wallet: wallet,
+                name: name
             });
             resolve();
         });
@@ -43,5 +51,3 @@ class Store {
         return this.workers.findIndex(worker => worker.name == name);
     }
 }
-
-module.exports = Store;

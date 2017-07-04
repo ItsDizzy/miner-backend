@@ -1,20 +1,23 @@
 {
   "name": "miner-backend",
-  "version": "0.0.1",
-  "description": "The miner backend hurrayy!",
-  "main": "server.js",
+  "private": true,
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "meteor run"
   },
-  "author": "Dizzy <itsdizzy40@gmail.com>",
-  "license": "ISC",
   "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "bootstrap": "^4.0.0-alpha.6",
+    "crypto": "0.0.3",
     "log4js": "^1.1.1",
+    "meteor-node-stubs": "~0.2.4",
+    "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.0",
+    "react-addons-transition-group": "^15.6.0",
+    "react-dom": "^15.6.1",
+    "reactstrap": "^4.8.0",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "eslint": "^4.1.1"
   }
 }
