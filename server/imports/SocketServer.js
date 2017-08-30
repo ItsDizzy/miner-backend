@@ -37,6 +37,7 @@ class SocketServer {
             .use(Meteor.bindEnvironment((socket, next) => {
                 console.info(`Socket#${socket.id} - handshake`)
                 let secret = socket.handshake.query.secret;
+                console.log(socket.handshake.query);
                 if(secret == "arandomkey...") {
                     return next();
                 }
@@ -81,7 +82,7 @@ class SocketServer {
 
         socket.on('m-stats', Meteor.bindEnvironment(stats => {
             console.info(`Socket#${socket.id} - stats, adding stats`);
-            this._createWorker(data, Meteor.bindEnvironment((err, _id) => {
+            this._createWorker(socket.handshake.query, Meteor.bindEnvironment((err, _id) => {
                 if(err) throw err;
 
                 let [ hashrate, shares, denies ] = stats.eth.split(';');
