@@ -5,3 +5,7 @@ import { Worker } from '../api/Worker';
 Meteor.publish('Worker.currentWorker', workerId => {
     return Worker.find({_id: workerId, ownerId: this.userId});
 });
+
+Meteor.publish('Worker.all', () => {
+    return Worker.find({});
+});

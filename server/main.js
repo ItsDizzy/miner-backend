@@ -1,10 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 
-//import SocketServer from './imports/SocketServer.js';
 import '../imports/server';
 
 Meteor.startup(() => {
-  //const socketServer = new SocketServer();
-  //socketServer.start();
-  // code to run on server at startup
+  const theOnlyUser = Meteor.users.find().fetch();
+  if (!theOnlyUser.length) {
+    Accounts.createUser({
+      email: 'admin@admin.com',
+      password: 'pass'
+    });
+  }
 });

@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -10,8 +12,10 @@ import Login from '../Account/Login';
 
 const history = createBrowserHistory();
 
-export default class AppRouter extends Component {
+class AppRouter extends Component {
   render() {
+    const { currentUser } = this.props;
+
     return (
       <Router history={history}>
         <AppFrame>
@@ -19,8 +23,9 @@ export default class AppRouter extends Component {
             <Switch>
               <Route path="/overview/:id?" component={Overview}/>
               <Route path="/account/login" component={Login}/>
+
               <Route exact path="/" render={() => (
-                <Redirect to="/overview" />
+                <Redirect to={currentUser ? '/overview' : '/account/login'} />
               )} />
               <Route path="*" render={() => (
                 <div>404 - Not Found</div>
@@ -32,3 +37,9 @@ export default class AppRouter extends Component {
     )
   }
 }
+
+export default createContainer(() => {
+  return {
+      currentUser: Meteor.user(),
+  };
+}, AppRouter);

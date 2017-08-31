@@ -6,9 +6,13 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "bcrypt": "^1.0.3",
     "bootstrap": "^4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "crypto": "0.0.3",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.3.0",
     "history": "^4.7.2",
     "log4js": "^1.1.1",
     "meteor-node-stubs": "~0.2.4",
@@ -24,6 +28,6 @@
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
-    "eslint": "^4.1.1"
+    "eslint": "^4.5.0"
   }
 }

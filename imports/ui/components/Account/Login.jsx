@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -9,25 +10,55 @@ import {
 } from 'reactstrap';
 
 
-export default class Login extends Component {    
+export default class Login extends Component {
+
+  state = {
+    email: '',
+    password: ''
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log("SUBMITTTTTTTTTT!");
+    // Checks will come later when we want...
+    Meteor.loginWithPassword(this.state.email, this.state.password, (err, result) => {
+      if(err) alert(err);
+      else
+        console.log(result);
+    });
+  }
+
   render() {
     const { activeTab } = this.props;
     return (
       <div>
         <Container>
           <Row>
-            <Col xs="3"></Col>
-            <Col xs="6">
+            <Col md="12" lg={{ size: 6, offset: 3 }}>
               <Card block outline inverse color="primary">
                 <CardTitle style={{textAlign: "center"}}>Login</CardTitle>
-                <Form>
+                <Form onSubmit={this.onSubmit}>
                   <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
-                    <Input type="email" name="email" id="exampleEmail" placeholder="E-mail" />
+                    <Label for="email">Email</Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      id="email"
+                      placeholder="E-mail"
+                      value={this.state.email}
+                      onChange={(event) => {this.setState({email: event.target.value})}}
+                    />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="examplePassword">Password</Label>
-                    <Input type="password" name="password" id="examplePassword" placeholder="Password" />
+                    <Label for="password">Password</Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={(event) => {this.setState({password: event.target.value})}}
+                    />
                   </FormGroup>
                   <ButtonGroup className="right">
                     <Button color="secondary">Register</Button>{' '}
@@ -36,7 +67,6 @@ export default class Login extends Component {
                 </Form>
               </Card>
             </Col>
-            <Col xs="3"></Col>
           </Row>
         </Container>
         

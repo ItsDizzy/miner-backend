@@ -16,8 +16,7 @@ export default class Register extends Component {
       <div>
         <Container>
           <Row>
-            <Col xs="3"></Col>
-            <Col xs="6">
+            <Col md="12" lg={{ size: 6, offset: 3 }}>
               <Card block outline inverse color="primary">
                 <CardTitle style={{textAlign: "center"}}>Register</CardTitle>
                 <Form>
@@ -36,7 +35,6 @@ export default class Register extends Component {
                 </Form>
               </Card>
             </Col>
-            <Col xs="3"></Col>
           </Row>
         </Container>
         
