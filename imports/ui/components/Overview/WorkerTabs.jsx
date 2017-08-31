@@ -13,7 +13,7 @@ export default class WorkerTabs extends Component {
           <NavLink tag={Link} to="/overview" className={classNames({active: !activeTab})}>Overview</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to="/overview/1" style={{color:"#4B5053"}} className={classNames({active: activeTab == 1})}>Miner #1</NavLink>
+          <NavLink tag={Link} to="/overview/1" className={classNames({active: activeTab == 1})}>Miner #1</NavLink>
         </NavItem>
       </Nav>
     );

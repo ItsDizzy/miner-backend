@@ -6,7 +6,7 @@ import AppFrame from './AppFrame';
 import AppContent from './AppContent';
 
 import Overview from '../Overview/Overview';
-import Test from '../Test';
+import Login from '../Account/Login';
 
 const history = createBrowserHistory();
 
@@ -17,8 +17,8 @@ export default class AppRouter extends Component {
         <AppFrame>
           <AppContent>
             <Switch>
-              <Route path="/test" component={Test}/>
               <Route path="/overview/:id?" component={Overview}/>
+              <Route path="/account/login" component={Login}/>
               <Route exact path="/" render={() => (
                 <Redirect to="/overview" />
               )} />
