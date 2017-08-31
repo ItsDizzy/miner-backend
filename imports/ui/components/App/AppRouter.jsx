@@ -9,6 +9,9 @@ import AppContent from './AppContent';
 
 import Overview from '../Overview/Overview';
 import Login from '../Account/Login';
+import Register from '../Account/Register';
+
+import Workers from '../Worker/Workers';
 
 const history = createBrowserHistory();
 
@@ -22,7 +25,10 @@ class AppRouter extends Component {
           <AppContent>
             <Switch>
               <Route path="/overview/:id?" component={Overview}/>
+              <Route path="/account/workers" component={Workers}/>
               <Route path="/account/login" component={Login}/>
+              <Route path="/account/register" component={Register}/>
+              
 
               <Route exact path="/" render={() => (
                 <Redirect to={currentUser ? '/overview' : '/account/login'} />

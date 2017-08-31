@@ -24,6 +24,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "react-transition-group": "^2.2.0",
+    "react-window-size": "^1.0.1",
     "reactstrap": "^4.8.0",
     "socket.io": "^2.0.3"
   },

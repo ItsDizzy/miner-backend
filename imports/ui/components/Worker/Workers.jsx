@@ -2,15 +2,16 @@ import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import windowSize from 'react-window-size';
 
 import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { Table } from 'reactstrap';
 
-import WorkerTabs from './WorkerTabs';
 import { Worker } from '../../../api/Worker';
 
-class Overview extends Component {
+class Workers extends Component {
   shouldComponentUpdate(nextProps) {
     if(nextProps.workers != this.props.workers) {
       return true;
@@ -45,52 +46,27 @@ class Overview extends Component {
 
     return (
       <div>
-        <WorkerTabs activeTab={activeWorker} workers={workers}/>
-
+        
         <div className="data-sheet">
-
-          <div>
-          <AreaChart width={this.props.windowWidth-140} height={200} data={data} className="data-sheet">
-
-            <Area type="monotone" dataKey="hashrate" stroke='#8884d8' fill='#8884d8'/>
-            <Area type="monotone" dataKey="shares" stroke='#82ca9d' fill='#82ca9d'/>
-            <Area type="monotone" dataKey="denied" stroke='#ca8282' fill='#ca8282'/>
-
-            <CartesianGrid stroke="#555" strokeDasharray="3 3" />
-
-            <XAxis dataKey="name" />
-            <YAxis />
-
-            <Tooltip />
-          </AreaChart>
-          </div>
-
           <div className="table-thing">
+          <h5><Link to={"/lol"}>New worker</Link></h5>
             <Table hover inverse>
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Name</th>
-                  <th>Uptime</th>
-                  <th>Hashrate</th>
-                  <th>Accepted shares</th>
-                  <th>Denied shares</th>
-                  <th>Temperature</th>
-                  <th>Fan speed</th>
-                  <th>Last seen</th>
-                                 
-                                    
+                  <th>Wallet</th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Miner #1</th>
-                  <td>-</td>
-                  <td>{data[data.length-1].hashrate} MH/s</td>
-                  <td>{data[data.length-1].shares}</td>
-                  <td>{data[data.length-1].denied}</td>
-                  <td>{data[data.length-1].temp}C</td>
-                  <td>{data[data.length-1].fanspeed}%</td>
-                  <td>5 minutes ago</td>
+                  <th scope="row">TTgTPpsMSrBEJtjxM</th>
+                  <td>GreyW</td>
+                  <td>0x4268098642d7807ae4c192266b86331c8cb8e942</td>
+                  <td><Link to={"/lol"}>Delete</Link></td>
+                  <td><Link to={"/lol"}>Edit</Link></td>
                 </tr>
               </tbody>
             </Table>
@@ -109,4 +85,4 @@ export default windowSize(createContainer(() => {
       currentUser: Meteor.user(),
       workers: Worker.find({}).fetch()
   };
-}, Overview));
+}, Workers));

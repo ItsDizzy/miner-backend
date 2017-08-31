@@ -42,3 +42,30 @@ html, body {
 .right {
     float: right;
 }
+
+.data-sheet {
+    padding-top: 25px;
+}
+
+.graph {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.recharts-default-tooltip {
+    border-radius: 0.25rem;
+}
+
+.table-thing {
+    margin-top: 75px;
+    padding-left: 43px;
+    padding-right: 43px;
+}
+
+.table-thing .table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.275);
+}
+
+.table-thing .table-hover {
+    background-color: #243447;
+}
