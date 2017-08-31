@@ -1,2 +1,40 @@
 @import "bootstrap";
 /* CSS declarations go here */
+
+html, body {
+    background-color: #243447;
+}
+
+.navbar-inverse {
+    background-color: #24292e;
+}
+
+.contents {
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #24292e;
+}
+
+.nav-link:hover {
+    border-color: #24292e!important;
+}
+
+.nav-link:focus {
+    border-color: #24292e!important;
+}
+
+.active {
+    background-color: #24292e!important;
+    color: rgba(255, 255, 255, 0.5)!important;
+    border: 1px solid transparent!important;
+    border-top-right-radius: 0.25rem!important;
+    border-top-left-radius: 0.25rem!important;
+}
+
+.info-root {
+    padding-top: 50px;
+}
