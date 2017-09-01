@@ -12,15 +12,6 @@ export default class WorkerTabs extends Component {
         <NavItem>
           <NavLink tag={Link} to="/overview" className={classNames({active: !activeTab})}>Overview</NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink
-            tag={Link}
-            to={`/overview/1`}
-            className={classNames({active: activeTab == 1})}
-          >
-            Miner #1
-          </NavLink>
-        </NavItem>
         {workers.map(worker => (
           <NavItem key={worker._id}>
             <NavLink

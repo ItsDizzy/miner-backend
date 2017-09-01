@@ -11,27 +11,28 @@ import Overview from '../Overview/Overview';
 
 import Login from '../Account/Login';
 import Register from '../Account/Register';
-import Workers from '../Account/Workers';
+import Workers from '../Worker/Workers';
+
+import AuthRoute from '../Global/AuthRoute';
+import ProtectedRoute from '../Global/ProtectedRoute';
 
 const history = createBrowserHistory();
 
 class AppRouter extends Component {
   render() {
-    const { currentUser } = this.props;
-
     return (
       <Router history={history}>
         <AppFrame>
           <AppContent>
             <Switch>
-              <Route path="/overview/:id?" component={Overview}/>
-              <Route path="/account/workers" component={Workers}/>
-              <Route path="/account/login" component={Login}/>
-              <Route path="/account/register" component={Register}/>
+              <ProtectedRoute path="/overview/:id?" component={Overview} {...this.props}/>
+              <ProtectedRoute path="/workers/:action?/:id?" component={Workers} {...this.props}/>
+              <AuthRoute path="/account/login" component={Login} {...this.props}/>
+              <AuthRoute path="/account/register" component={Register} {...this.props}/>
               
 
               <Route exact path="/" render={() => (
-                <Redirect to={currentUser ? '/overview' : '/account/login'} />
+                <Redirect to="/overview/" />
               )} />
               <Route path="*" render={() => (
                 <div>404 - Not Found</div>
@@ -45,7 +46,9 @@ class AppRouter extends Component {
 }
 
 export default createContainer(() => {
+  const loggingIn = Meteor.loggingIn();
   return {
-      currentUser: Meteor.user(),
+      loggingIn,
+      authenticated: !loggingIn && !!Meteor.userId(),
   };
 }, AppRouter);

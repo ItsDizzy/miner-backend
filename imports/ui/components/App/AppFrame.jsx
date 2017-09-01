@@ -43,16 +43,12 @@ class AppFrame extends Component {
         <NavItem>
           <NavLink tag={Link} to="/overview/">Overview</NavLink>
         </NavItem>
-        <NavDropdown isOpen={this.state.isUserOpen} toggle={this.toggleUserDropdown}>
-          <DropdownToggle nav caret>
-            {currentUser.emails[0].address}
-          </DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem tag={Link} to="/account/workers">Workers</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem onClick={() => Meteor.logout()}>Logout</DropdownItem>
-          </DropdownMenu>
-        </NavDropdown>
+        <NavItem>
+          <NavLink tag={Link} to="/workers/">Workers</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink style={{cursor: 'pointer'}} onClick={() => Meteor.logout()}>Logout</NavLink>
+        </NavItem>
       </Nav>
     )
   }

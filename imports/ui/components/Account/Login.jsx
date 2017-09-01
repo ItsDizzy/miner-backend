@@ -14,22 +14,26 @@ export default class Login extends Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
+    redirectToReferrer: false
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log("SUBMITTTTTTTTTT!");
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+
     // Checks will come later when we want...
-    Meteor.loginWithPassword(this.state.email, this.state.password, (err, result) => {
-      if(err) alert(err);
-      else
-        console.log(result);
+    Meteor.loginWithPassword(this.state.email, this.state.password, err => {
+      if(err) {
+        // Handle error
+        alert(err);
+      } else {
+        this.props.history.push(from);
+      }
     });
   }
 
   render() {
-    const { activeTab } = this.props;
     return (
       <div>
         <Container>

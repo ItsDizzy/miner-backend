@@ -39,5 +39,53 @@ Meteor.methods({
 
     getWorker(id) {
         return Worker.findOne({_id: id});
+    },
+
+    createWorker(name, wallet, email) {
+        check(name, String);
+        check(wallet, String);
+        check(email, String);
+
+        if(!this.userId) {
+            return Meteor.Error(403, 'Not logged in yet!');
+        }
+
+        Worker.insert({
+            ownerId: this.userId,
+            name,
+            wallet,
+            email
+        });
+    },
+
+    updateWorker(id, name, wallet, email) {
+        check(id, String);
+        check(name, String);
+        check(wallet, String);
+        check(email, String);
+
+        let worker = Worker.findOne({_id: id});
+
+        if(!worker) {
+            return Meteor.Error('no-exists');
+        }
+
+        if(!this.userId || worker.ownerId !== this.userId) {
+            return Meteor.Error('not-authorised'); 
+        }
+
+        Worker.update(id, { $set: { name, wallet, email } });
+    },
+
+    deleteWorker(id) {
+        check(id, String);
+
+        let worker = Worker.findOne({_id: id});
+
+        if(!this.userId || worker.ownerId !== this.userId) {
+            return Meteor.Error('not-authorised'); 
+        }
+
+        Worker.remove(id);
     }
 })
