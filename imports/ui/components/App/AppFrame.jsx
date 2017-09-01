@@ -27,6 +27,9 @@ class AppFrame extends Component {
     return (
       <Nav className="ml-auto" navbar>
         <NavItem>
+          <NavLink tag={Link} to="/">Home</NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink tag={Link} to="/account/login">Login</NavLink>
         </NavItem>
         <NavItem>
@@ -45,6 +48,9 @@ class AppFrame extends Component {
         </NavItem>
         <NavItem>
           <NavLink tag={Link} to="/workers/">Workers</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to="/account/">Account</NavLink>
         </NavItem>
         <NavItem>
           <NavLink style={{cursor: 'pointer'}} onClick={() => Meteor.logout()}>Logout</NavLink>

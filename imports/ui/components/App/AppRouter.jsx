@@ -12,6 +12,7 @@ import Overview from '../Overview/Overview';
 import Login from '../Account/Login';
 import Register from '../Account/Register';
 import Workers from '../Worker/Workers';
+import Home from '../Home/Home';
 
 import AuthRoute from '../Global/AuthRoute';
 import ProtectedRoute from '../Global/ProtectedRoute';
@@ -29,11 +30,8 @@ class AppRouter extends Component {
               <ProtectedRoute path="/workers/:action?/:id?" component={Workers} {...this.props}/>
               <AuthRoute path="/account/login" component={Login} {...this.props}/>
               <AuthRoute path="/account/register" component={Register} {...this.props}/>
-              
 
-              <Route exact path="/" render={() => (
-                <Redirect to="/overview/" />
-              )} />
+              <AuthRoute exact path="/" component={Home} {...this.props}/>
               <Route path="*" render={() => (
                 <div>404 - Not Found</div>
               )} />

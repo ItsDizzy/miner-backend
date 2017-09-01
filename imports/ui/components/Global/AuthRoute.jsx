@@ -13,7 +13,7 @@ const AuthRoute = ({ loggingIn, authenticated, component, ...rest }) => (
 
     return !authenticated ?
       (React.createElement(component, { ...props, loggingIn, authenticated })) :
-      (<Redirect to='/' />);
+      (<Redirect to='/overview' />);
   }} />
 );
 

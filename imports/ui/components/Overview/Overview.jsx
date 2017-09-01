@@ -82,7 +82,7 @@ class Overview extends Component {
 
           <div className="table-thing">
             {currentWorker && (
-              <div>
+              <div className="miner-status">
                 <span style={{color: '#fff'}}>{currentWorker.name}: {currentWorker.running ? 'running' : 'offline'}</span>
                 {' '}
                 <Button color="primary" onClick={() => this.toggleWorker(currentWorker)}>{!currentWorker.running ? 'Start' : 'Stop'}</Button>
