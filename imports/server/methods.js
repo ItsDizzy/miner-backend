@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import Worker from '../api/Worker';
+import { Worker } from '../api/Worker';
 
 Meteor.methods({
     registerWorker(name, wallet) {
@@ -31,5 +31,13 @@ Meteor.methods({
         check(fanspeed, Number);
 
         // Do shit
+    },
+
+    toggleWorker(id, running) {
+        Worker.update(id, { $set: { running } });
+    },
+
+    getWorker(id) {
+        return Worker.findOne({_id: id});
     }
 })

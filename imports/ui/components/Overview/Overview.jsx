@@ -5,23 +5,52 @@ import React, { Component } from 'react';
 import windowSize from 'react-window-size';
 
 import { AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 
 import WorkerTabs from './WorkerTabs';
 import { Worker } from '../../../api/Worker';
 
 class Overview extends Component {
   shouldComponentUpdate(nextProps) {
-    if(nextProps.workers != this.props.workers) {
+    if(nextProps.workers.length != this.props.workers.length) {
+      return true;
+    }
+
+    if(nextProps.currentWorker != this.props.currentWorker) {
+      return true;
+    }
+
+    if(nextProps.match != this.props.match) {
       return true;
     }
     
     return false;
   }
 
+  toggleWorker(worker) {
+    Meteor.call('toggleWorker', worker._id, !worker.running);
+  }
+
+  renderMinerList() {
+    const { workers } = this.props;
+    return workers.map(worker => (
+      <tr key={worker._id}>
+        <th scope="row">{worker.name}</th>
+        <td>-</td>
+        <td>ERR: no data</td>
+        <td>ERR: no data</td>
+        <td>ERR: no data</td>
+        <td>ERR: no data</td>
+        <td>ERR: no data</td>
+        <td>ERR: no data</td>
+      </tr>
+    ));
+  }
+
   render() {
-    const { match, workers } = this.props;
+    const { match, workers, currentWorker } = this.props;
     const activeWorker = match.params.id;
+    console.log(currentWorker);
 
     const data = [
       {name: 'Page A', hashrate: 18.53, shares:1, denied:0, temp: 60, fanspeed: 64},
@@ -40,8 +69,6 @@ class Overview extends Component {
       {name: 'Page G', hashrate: 34.90, shares:16, denied:2, temp: 60, fanspeed: 64},
       {name: 'Page G', hashrate: 0, shares:0, denied:0, temp: 0, fanspeed: 0},
     ];
-
-    console.log(workers.find(worker => worker._id == activeWorker));
 
     return (
       <div>
@@ -66,6 +93,13 @@ class Overview extends Component {
           </div>
 
           <div className="table-thing">
+            {currentWorker && (
+              <div>
+                <span style={{color: '#fff'}}>{currentWorker.name}: {currentWorker.running ? 'running' : 'offline'}</span>
+                {' '}
+                <Button color="primary" onClick={() => this.toggleWorker(currentWorker)}>{!currentWorker.running ? 'Start' : 'Stop'}</Button>
+              </div>
+            )}
             <Table hover inverse>
               <thead>
                 <tr>
@@ -92,6 +126,7 @@ class Overview extends Component {
                   <td>{data[data.length-1].fanspeed}%</td>
                   <td>5 minutes ago</td>
                 </tr>
+                {this.renderMinerList()}
               </tbody>
             </Table>
           </div>
@@ -102,11 +137,12 @@ class Overview extends Component {
   }
 }
 
-export default windowSize(createContainer(() => {
+export default windowSize(createContainer(({match}) => {
   Meteor.subscribe('Worker.all');
 
   return {
       currentUser: Meteor.user(),
-      workers: Worker.find({}).fetch()
+      workers: Worker.find({}).fetch(),
+      currentWorker: Worker.findOne({_id: match.params.id})
   };
 }, Overview));

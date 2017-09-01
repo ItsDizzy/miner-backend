@@ -8,10 +8,10 @@ import AppFrame from './AppFrame';
 import AppContent from './AppContent';
 
 import Overview from '../Overview/Overview';
+
 import Login from '../Account/Login';
 import Register from '../Account/Register';
-
-import Workers from '../Worker/Workers';
+import Workers from '../Account/Workers';
 
 const history = createBrowserHistory();
 

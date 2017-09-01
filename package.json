@@ -26,6 +26,7 @@
     "react-transition-group": "^2.2.0",
     "react-window-size": "^1.0.1",
     "reactstrap": "^4.8.0",
+    "recharts": "^1.0.0-alpha.4",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {

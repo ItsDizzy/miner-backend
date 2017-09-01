@@ -48,7 +48,7 @@ class AppFrame extends Component {
             {currentUser.emails[0].address}
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem>Workers</DropdownItem>
+            <DropdownItem tag={Link} to="/account/workers">Workers</DropdownItem>
             <DropdownItem divider />
             <DropdownItem onClick={() => Meteor.logout()}>Logout</DropdownItem>
           </DropdownMenu>
