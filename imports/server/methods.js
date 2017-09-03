@@ -1,36 +1,31 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Worker } from '../api/Worker';
+import { Worker, Stats } from '../api';
 
 Meteor.methods({
-    registerWorker(name, wallet) {
-        check(name, String);
-        check(wallet, String);
-
-        // Check if worker logged in already
-        if(this.userId) {
-            Worker.insert({
-                name: name,
-                wallet: wallet,
-                ownerId: this.userId
-            });
-        } else {
-            throw new Meteor.Error(403, 'Not logged in yet!');
-        }
-    },
-
-    unregisterWorker(name) {
-        check(name, String);
-    },
-
-    addWorkerStats(hashrate, shares, denies, temp, fanspeed) {
+    addWorkerStats(workerId, data) {
         check(hashrate, Number);
-        check(shares, Number);
-        check(denies, Number);
-        check(temp, Number);
-        check(fanspeed, Number);
+        check(data, Object);
 
-        // Do shit
+        const worker = Worker.findOne({_id: workerId});
+        
+        if(!worker) {
+            return Meteor.Error('no-exists');
+        }
+
+        if(!this.userId || worker.ownerId !== this.userId) {
+            return Meteor.Error('not-authorised'); 
+        }
+
+        Stats.insert({
+            hashrate: data.hashrate,
+            gpus: data.gpus,
+            shares: data.shares,
+            workerId,
+            timestamp: Date.now()
+        });
+
+        Worker.update(workerId, { $set: { lastSeen: Date.now() } });
     },
 
     toggleWorker(id, running) {
