@@ -95,7 +95,7 @@ class Overview extends Component {
 
     return (
       <div>
-        <WorkerTabs activeTab={activeWorker} workers={workers}/>
+        <WorkerTabs activeTab={activeWorker} workers={workers} className="tabs"/>
 
         <div className="data-sheet">
 

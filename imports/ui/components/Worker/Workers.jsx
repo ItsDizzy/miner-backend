@@ -39,7 +39,7 @@ class Workers extends Component {
         <div className="data-sheet">
           <h3 className="title">Workers</h3>
           <div className="table-thing">
-          <h5><Link to={"/workers/create"}>New worker</Link></h5>
+          <h5 style={{padding:10}}><Link to={"/workers/create"}>New worker</Link></h5>
             <Table hover inverse>
               <thead>
                 <tr>
