@@ -4,7 +4,7 @@ import { Worker, Stats } from '../api';
 
 Meteor.methods({
     addWorkerStats(workerId, data) {
-        check(hashrate, Number);
+        check(workerId, String);
         check(data, Object);
 
         const worker = Worker.findOne({_id: workerId});

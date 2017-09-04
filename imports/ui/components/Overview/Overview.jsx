@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
 import React, { Component } from 'react';
@@ -8,11 +9,16 @@ import { Table, Button } from 'reactstrap';
 
 import WorkerTabs from './WorkerTabs';
 import HashChart from './HashChart';
-import { Worker } from '../../../api/Worker';
+import { Worker, Stats } from '../../../api';
 
 class Overview extends Component {
+
   shouldComponentUpdate(nextProps) {
     if(nextProps.workers.length != this.props.workers.length) {
+      return true;
+    }
+
+    if(nextProps.stats != this.props.stats) {
       return true;
     }
 
@@ -32,25 +38,42 @@ class Overview extends Component {
   }
 
   renderMinerList() {
-    const { workers } = this.props;
-    return workers.map(worker => (
-      <tr key={worker._id}>
-        <th scope="row">{worker.name}</th>
-        <td>-</td>
-        <td>ERR: no data</td>
-        <td>ERR: no data</td>
-        <td>ERR: no data</td>
-        <td>ERR: no data</td>
-        <td>ERR: no data</td>
-        <td>ERR: no data</td>
-      </tr>
-    ));
+    const { workers, stats } = this.props;
+    return workers.map(worker => {
+      const currentStats = stats.find(stat => stat.workerId == worker._id);
+      if(currentStats && worker.running) {
+        return (
+          <tr key={worker._id}>
+            <th scope="row">{worker.name}</th>
+            <td>-</td>
+            <td>{currentStats.hashrate / 1000} MH/s</td>
+            <td>{currentStats.shares.total}</td>
+            <td>{currentStats.shares.rejected}</td>
+            <td>{currentStats.gpus[0].temp}</td>
+            <td>{currentStats.gpus[0].fanSpeed}</td>
+            <td>{moment(worker.lastSeen).fromNow()}</td>
+          </tr>
+        );
+      } else {
+        return (
+          <tr key={worker._id}>
+            <th scope="row">{worker.name}</th>
+            <td>-</td>
+            <td>0 MH/s</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>{worker.lastSeen ? moment(worker.lastSeen).fromNow() : 'Never'}</td>
+          </tr>
+        );
+      }
+    });
   }
 
   render() {
-    const { match, workers, currentWorker } = this.props;
+    const { match, workers, currentWorker, stats } = this.props;
     const activeWorker = match.params.id;
-    console.log(currentWorker);
 
     const data = [
       {name: 'Page A', hashrate: 18.53, shares:1, denied:0, temp: 60, fanspeed: 64},
@@ -114,11 +137,12 @@ class Overview extends Component {
 }
 
 export default windowSize(createContainer(({match}) => {
-  Meteor.subscribe('Worker.all');
+  Meteor.subscribe('Worker.allWithLastStats');
 
   return {
       currentUser: Meteor.user(),
       workers: Worker.find({}).fetch(),
+      stats: Stats.find({}).fetch(),
       currentWorker: Worker.findOne({_id: match.params.id})
   };
 }, Overview));

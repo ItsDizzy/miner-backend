@@ -23,3 +23,5 @@ promise@0.8.9
 ddp-rate-limiter
 accounts-password
 react-meteor-data
+dburles:collection-helpers
+reywood:publish-composite
